@@ -5,34 +5,43 @@ import os
 import argparse
 import sys 
 import configparser
-import youtube-dl 
+import youtube_dl 
+import datetime
 
 ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s.%(ext)s'})
 ydl_opts = {}
-config = configparser.ConfigParser()
+listfile = configparser.ConfigParser()
 
-##def functionsi
+##def functions
 
 def set_download_path(path: str) -> str:
     print("changing downloads path to", str(path))
 
 def create_artists(artist: str, website: str, platform: str) -> str:
     print("adding", str(artist), "@", str(website))     
-    config.read('resources/list.txt')
-    if config.has_section(str(artist)) == True: 
-        config.set(str(artist), str(platform), str(website))
-        with open('resources/list.txt', 'w') as configfile:
-            config.write(configfile)
-        configfile.close()
+    listfile.read('resources/list.txt')
+    if listfile.has_section(str(artist)) == True: 
+        listfile.set(str(artist), str(platform), str(website))
+        with open('resources/list.txt', 'w') as listdata:
+            listfile.write(listdata)
+        listdata.close()
     else:
-        config.add_section(str(artist))
-        config[str(artist)][str(platform)] = str(website)
-        with open('resources/list.txt', 'w') as configfile:
-            config.write(configfile)
-        configfile.close()
+        listfile.add_section(str(artist))
+        listfile[str(artist)][str(platform)] = str(website)
+        with open('resources/list.txt', 'w') as listdata:
+            listfile.write(listdata)
+        listdata.close()
 
-def update_tunes():
+def update_tunes(datetime: str) -> str:
     print("looking for updates!")
+    listfile.read('resources/list.txt')
+    for each_section in listfile.sections():
+        for (each_key, each_val) in listfile.items(each_section):
+            print("checking out", str(each_val))
+            webscrape(each_val)
+
+def webscrape(site: str) -> str:
+    print(str(site))
     
 
 def download_tunes():
@@ -42,14 +51,14 @@ def download_tunes():
 
 def remove_artist(artist: str) -> str:
     print("removing",  str(artist))
-    config.read('resources.list.txt')
-    config.remove_section(str(artist))
+    listfile.read('resources.list.txt')
+    listfile.remove_section(str(artist))
 
 def list_artists():
-    config.read('resources/list.txt')
-    sections = config.sections()
+    listfile.read('resources/list.txt')
+    sections = listfile.sections()
     for section in sections:
-        if config.has_section(section):
+        if listfile.has_section(section):
             print(f'Found {section}')
 
 ##configuring argparse stuff
@@ -65,7 +74,8 @@ add.add_argument('--artist', type=str, required=True)
 add.add_argument('--website', type=str, required=True)
 add.add_argument('--platform', type=str, required=True)
 
-update = subparser.add_parser('update', help='update from list')
+update = subparser.add_parser('update', help='update from list. use date yyyy-mm-dd')
+update.add_argument('--datetime', type=str, required=True)
 
 download = subparser.add_parser('download', help='download t00ns')
 
@@ -91,7 +101,7 @@ if args.command == 'remove':
     remove_artist(args.artist)
 
 if args.command == 'update':
-    update_tunes()
+    update_tunes(args.datetime)
 
 if args.command == 'download':
     download_tunes()
