@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 from requests import get
 from bs4 import BeautifulSoup
-
+import webscraper.py as ws 
 
 ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s.%(ext)s'})
 ydl_opts = {}
