@@ -47,7 +47,6 @@ def update_tunes(datetime: str) -> str:
             webscrape(each_val)
 
 def webscrape(site: str) -> str:
-    print(str(site))
     for sites in site:
         print(str(site))
 
