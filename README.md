@@ -1,6 +1,6 @@
 ##AutoM00sic is (read: will be) a gr8 way to automatically check for new uploads by artists and automatically download them (on sites supported by youtube-dl. dont expect spotify intergration) 
 
-<img src="https://cdn.discordapp.com/attachments/310843140976148482/900958098531946506/milked.png" alt="" style="max-width: 100%;">
+![milked](https://cdn.discordapp.com/attachments/310843140976148482/900958098531946506/milked.png)
 
 #commands:
 
