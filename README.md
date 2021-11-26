@@ -4,7 +4,7 @@
 
 # commands:
 
-add --artist --website --platform
+add --artist (name) --website (url) --platform (name of service. soundcloud, spotify etc)
 
 update // look for new uploads. print out avaliable downloads. 
 
@@ -21,8 +21,6 @@ example: AutoM00sic.py add --artist siouxxie --website https://soundcloud.com/si
 # TODO:
 
 actually query sites 
-
-youtube-dl intergration
 
 find a way to determine what is and is not updated. perhaps a --date-last-checked param for update that checks against uploaded date on site? 
 

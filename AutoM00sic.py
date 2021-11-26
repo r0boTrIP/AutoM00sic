@@ -5,14 +5,7 @@ import argparse
 import configparser
 import youtube_dl 
 import datetime
-import re
-import json
-import requests
-import numpy as np
-import pandas as pd
-from requests import get
-from bs4 import BeautifulSoup
-import webscraper.py as ws 
+import scrapy 
 
 ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s.%(ext)s'})
 ydl_opts = {}
