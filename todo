@@ -1,0 +1,14 @@
+fix print bug in webscraper function (bad pass from each_val?)
+finish soundcloud scraper
+get complete.txt working
+refactor upload and download into one arg
+#after this we will at least have a working soundcloud scraper / downloader. to scale to other sites we'll need to solve:
+
+determining spider by sites in queue / each_val
+write other spiders
+
+#speed & optimization
+multithreading
+fix argparse to be more user friendly
+
+mayb this https://github.com/zacheberhart/Soundcloud-Scraper

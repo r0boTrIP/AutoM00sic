@@ -2,16 +2,17 @@
 import string 
 import sys
 import argparse
+import os
 import configparser
 import youtube_dl 
 import datetime
-import scrapy 
+import scrapy
+import spider
 
 ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s.%(ext)s'})
 ydl_opts = {}
 listfile = configparser.ConfigParser()
-dates = []
-##def functions
+dl_path = os.path.dirname(__file__)
 
 def set_download_path(path: str) -> str:
     print("changing downloads path to", str(path))
@@ -31,6 +32,7 @@ def create_artists(artist: str, website: str, platform: str) -> str:
             listfile.write(listdata)
         listdata.close()
 
+#interfaces with list file, sends values to scraper functions & determines correct scraper
 def update_tunes(datetime: str) -> str:
     print("looking for updates!")
     listfile.read('resources/list.txt')
@@ -39,14 +41,22 @@ def update_tunes(datetime: str) -> str:
             print("checking out", str(each_val))
             webscrape(each_val)
 
+#does the actual scraping & determines url. eventually make faster by comparing complete.txt before crawling 
 def webscrape(site: str) -> str:
     for sites in site:
         print(str(site))
 
+#handles ydl downloads
 def download_tunes():
-    print("downloading!")
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([''])
+	print("downloading!")
+	with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+		for link in ydl_opts:
+			if ydl_opts not in ('resources/complete.txt'):
+				 ydl.download([''])
+				 with open('resources/complete.txt', 'w') as complete:
+					 listfile.write(complete)
+					 complete.close()
+					 print('downloaded', complete)
 
 def remove_artist(artist: str) -> str:
     print("removing",  str(artist))
@@ -73,8 +83,8 @@ add.add_argument('--artist', type=str, required=True)
 add.add_argument('--website', type=str, required=True)
 add.add_argument('--platform', type=str, required=True)
 
-update = subparser.add_parser('update', help='update from list. use date yyyy-mm-dd')
-update.add_argument('--datetime', type=str, required=True)
+update = subparser.add_parser('update', help='update from list. use date yyyy-mm-dd if you want to start searching from a certain date. Will download everything otherwise.')
+update.add_argument('--datetime', type=str, required=False)
 
 download = subparser.add_parser('download', help='download t00ns')
 
