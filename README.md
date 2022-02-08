@@ -24,4 +24,6 @@ actually query sites
 
 find a way to determine what is and is not updated. perhaps a --date-last-checked param for update that checks against uploaded date on site? 
 
-NOTES: essentially just creates a db file of artist info as of now. pretty neat, RIGHT!? 
+at least get soundcloud working..
+
+NOTES: essentially just creates a text file of artist info as of now. pretty neat, RIGHT!? 
