@@ -6,13 +6,13 @@ import os
 import configparser
 import youtube_dl 
 import datetime
-import scrapy
-import spider
+from bs4 import BeautifulSoup as bss 
 
 ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s.%(ext)s'})
 ydl_opts = {}
 listfile = configparser.ConfigParser()
 dl_path = os.path.dirname(__file__)
+
 
 def set_download_path(path: str) -> str:
     print("changing downloads path to", str(path))
@@ -43,8 +43,7 @@ def update_tunes(datetime: str) -> str:
 
 #does the actual scraping & determines url. eventually make faster by comparing complete.txt before crawling 
 def webscrape(site: str) -> str:
-    for sites in site:
-        print(str(site))
+    for sites in site: 
 
 #handles ydl downloads
 def download_tunes():
@@ -70,7 +69,7 @@ def list_artists():
         if listfile.has_section(section):
             print(f'Found {section}')
 
-##configuring argparse stuff
+#configuring argparse stuff
 
 parser = argparse.ArgumentParser()
 subparser= parser.add_subparsers(dest='command')
